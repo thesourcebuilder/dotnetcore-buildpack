@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+function topic() {
+  echo "-----> $*"
+}
+
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
+function install_dotnet() {
+  local BUILD_DIR="$1"
+  local CACHE_DIR="$2"
+  local DOTNET_SDK_VERSION="$3"
+  local DOTNET_RUNTIME_VERSION="$4"
+
+  local DOTNET_CACHE_LOCATION=${CACHE_DIR}/dotnet/${DOTNET_SDK_VERSION}
+  if [ ! -d ${DOTNET_CACHE_LOCATION} ]; then
+    topic "Removing old cached .NET version"
+    rm -rf ${CACHE_DIR}/dotnet/* || true
+    mkdir -p ${DOTNET_CACHE_LOCATION}/{sdk,runtime}
+
+    topic "Fetching .NET SDK"
+    local DOTNET_SDK_DOWNLOAD_URL=https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz
+    curl -sSL ${DOTNET_SDK_DOWNLOAD_URL} | tar xz -C ${DOTNET_CACHE_LOCATION}/sdk
+    find ${DOTNET_CACHE_LOCATION}/sdk/sdk/${DOTNET_SDK_VERSION}/runtimes/* -maxdepth 0 ! -name unix -exec rm -r {} +
+    rm -f ${DOTNET_CACHE_LOCATION}/sdk/sdk/${DOTNET_SDK_VERSION}/nuGetPackagesArchive.lzma
+
+    topic "Fetching .NET Runtime"
+    local DOTNET_RUNTIME_DOWNLOAD_URL=https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_RUNTIME_VERSION/dotnet-runtime-$DOTNET_RUNTIME_VERSION-linux-x64.tar.gz
+    curl -sSL ${DOTNET_RUNTIME_DOWNLOAD_URL} | tar xz -C ${DOTNET_CACHE_LOCATION}/runtime
+  fi
+
+  export PATH="${DOTNET_CACHE_LOCATION}/sdk:$PATH"
+  mkdir -p ${BUILD_DIR}/.heroku/dotnet
+  cp -r ${DOTNET_CACHE_LOCATION}/runtime ${BUILD_DIR}/.heroku/dotnet
+}
+
+export_env_dir() {
+  local env_dir=$1
+  if [ -d "$env_dir" ]; then
+    local whitelist_regex=${2:-''}
+    local blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH|LANG)$'}
+    if [ -d "$env_dir" ]; then
+      for e in $(ls $env_dir); do
+        echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+        export "$e=$(cat $env_dir/$e)"
+        :
+      done
+    fi
+  fi
+}
