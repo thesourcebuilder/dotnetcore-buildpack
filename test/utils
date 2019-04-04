@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# taken from
-# https://github.com/ryanbrainard/heroku-buildpack-testrunner/blob/master/lib/test_utils.sh
-
 oneTimeSetUp()
 {
    TEST_SUITE_CACHE="$(mktemp -d ${SHUNIT_TMPDIR}/test_suite_cache.XXXX)"
