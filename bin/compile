@@ -7,8 +7,8 @@ set -o pipefail   # Don't ignore exit codes when piping output
 set -o nounset    # Fail on unset variables
 unset GIT_DIR     # Avoid GIT_DIR leak from previous build steps
 
-if [ "$STACK" != "heroku-16" ] && [ "$STACK" != "heroku-18" ]; then
-	echo "Need heroku-16 or heroku-18 stack"
+if [ "$STACK" != "heroku-16" ] && [ "$STACK" != "heroku-18" ] && [ "$STACK" != "heroku-20" ]; then
+	echo "Need heroku-16 or heroku-18 or heroku-20 stack"
 	exit 1
 fi
 
@@ -50,7 +50,7 @@ fi
 if [ -n "$(cat $PROJECT_FILE | grep 'netcoreapp2.0')" ]; then
 	topic "WARNING"
 	echo "For netcoreapp2.0 use https://github.com/eduardopeixoto/dotnetcore-buildpack#v2.1.200" | indent
-	echo "More info https://github.com/eduardopeixoto/dotnetcore-buildpack/issues/44" | indent
+	echo "More info https://github.com/eduardopeixoto/dotnetcore-buildpack/issues" | indent
 fi
 
 export NUGET_PACKAGES="${CACHE_DIR}/nuget/cache"
