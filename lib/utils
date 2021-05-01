@@ -12,6 +12,11 @@ function indent() {
   esac
 }
 
+function install_ubuntu_ssl_fixes() {
+  topic "Removing old cached .NET version"
+  apt-get update && apt-get install -y --no-install-recommends ca-certificates curl jq git iputils-ping libcurl4 libicu60 libunwind8 netcat libssl1.0 
+}
+
 function install_dotnet() {
   local BUILD_DIR="$1"
   local CACHE_DIR="$2"
