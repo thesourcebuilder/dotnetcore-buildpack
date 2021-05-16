@@ -24,6 +24,12 @@ testDotNetCore22() {
   assertCapturedSuccess
 }
 
+testDotNetCore50() {
+  compile "dotnetcore-5.0"
+  assertCaptured "dotnetcore-5.0 ->"
+  assertCapturedSuccess
+}
+
 # Utils
 
 pushd $(dirname 0) >/dev/null
