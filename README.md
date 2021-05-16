@@ -8,25 +8,13 @@ The Buildpack will search through the repository's folders to locate a `Startup.
 
 If repository contains **multiple** Web Applications (multiple `Startup.cs`), `PROJECT_FILE` and `PROJECT_NAME` environment variables allow to choose project for publishing.
 
-### .NET Core latest stable
+### Configuring
 
 ```
-heroku buildpacks:set eduardopeixoto/dotnetcore
+heroku buildpacks:set https://github.com/thesourcebuilder/dotnetcore-buildpack
 ```
 
-### .NET Core edge
-
-```
-heroku buildpacks:set https://github.com/eduardopeixoto/dotnetcore-buildpack
-```
-
-### Previous releases
-
-```
-heroku buildpacks:set https://github.com/eduardopeixoto/dotnetcore-buildpack#version
-```
-
-Available [releases](https://github.com/eduardopeixoto/dotnetcore-buildpack/releases)
+Available [releases](https://github.com/thesourcebuilder/dotnetcore-buildpack/releases)
 
 More info
 
@@ -59,7 +47,7 @@ You cannot run migrations with the `dotnet ef` commands once the app is built. A
 ## Node.js and NPM
 
 ```bash
-heroku buildpacks:set eduardopeixoto/dotnetcore
+heroku buildpacks:set https://github.com/thesourcebuilder/dotnetcore-buildpack
 heroku buildpacks:add --index 1 heroku/nodejs
 ```
 
