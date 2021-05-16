@@ -14,8 +14,6 @@ If repository contains **multiple** Web Applications (multiple `Startup.cs`), `P
 heroku buildpacks:set https://github.com/thesourcebuilder/dotnetcore-buildpack
 ```
 
-Available [releases](https://github.com/thesourcebuilder/dotnetcore-buildpack/releases)
-
 More info
 
 - [Heroku Buildpack Registry](https://devcenter.heroku.com/articles/buildpack-registry)
