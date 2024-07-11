@@ -23,8 +23,7 @@ if [ -n "${ZSH_VERSION:-}" ]; then
     _shunit_fatal 'zsh shwordsplit option is required for proper operation'
   fi
   if [ -z "${SHUNIT_PARENT:-}" ]; then
-    _shunit_fatal "zsh does not pass \$0 through properly. please declare \
-\"SHUNIT_PARENT=\$0\" before calling shUnit2"
+    _shunit_fatal "zsh does not pass \$0 through properly. please declare SHUNIT_PARENT=\$0\" before calling shUnit2"
   fi
 fi
 
@@ -979,7 +978,6 @@ fi
 __shunit_tmpDir=`_shunit_mktempDir`
 
 # provide a public temporary directory for unit test scripts
-# TODO(kward): document this
 SHUNIT_TMPDIR="${__shunit_tmpDir}/tmp"
 mkdir "${SHUNIT_TMPDIR}"
 
@@ -1007,7 +1005,6 @@ fi
 oneTimeSetUp
 
 # execute the suite function defined in the parent test script
-# deprecated as of 2.1.0
 suite
 
 # if no suite function was defined, dynamically build a list of functions

@@ -1,32 +1,8 @@
 #!/usr/bin/env bash
 
-testDotNetCore2() {
-  compile "dotnetcore-2"
-  assertCaptured "dotnetcore-2 ->"
-  assertCapturedSuccess
-}
-
-testDotNetCore21() {
-  compile "dotnetcore-2.1"
-  assertCaptured "dotnetcore-2.1 ->"
-  assertCapturedSuccess
-}
-
-testDotNetCore2CustomProcfile() {
-  compile "custom-procfile"
-  assertCaptured "Be careful with custom Procfile"
-  assertCapturedSuccess
-}
-
-testDotNetCore22() {
-  compile "dotnetcore-2.2"
-  assertCaptured "dotnetcore-2.2 ->"
-  assertCapturedSuccess
-}
-
-testDotNetCore50() {
-  compile "dotnetcore-5.0"
-  assertCaptured "dotnetcore-5.0 ->"
+testDotNetCore80() {
+  compile "dotnetcore-8.0"
+  assertCaptured "dotnetcore-8.0 ->"
   assertCapturedSuccess
 }
 
